@@ -10,8 +10,6 @@ int getDistance(pair<int, int> p1, pair<int, int> p2, pair<int, int> p) {
     return abs((p2.first - p1.first) * (p.second - p1.second) - (p2.second - p1.second) * (p.first - p1.first) );
 }
 
-
-
 void quickHull(pair<int,int> p1, pair<int,int> p2, int side , vector<pair<int,int>> &points){
 
     // cout<<"in"<<endl;
@@ -83,7 +81,7 @@ int main(){
     minp=maxp = p[0];
 
 
-
+auto start = chrono::high_resolution_clock::now();
 
 for (int i = 0; i < p.size(); i++) {
     if (minp.first > p[i].first || (minp.first == p[i].first && minp.second > p[i].second)) {
@@ -103,6 +101,9 @@ for (int i = 0; i < p.size(); i++) {
     cout<<"qickhull points"<<endl;
     quickHull(minp, maxp, -1, p);
     quickHull(minp,maxp,1,p);
+    auto stop = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
         set<pair<double,pair<int,int>>> anglep;
         anglep.insert({INT_MIN,minp});
 
@@ -129,6 +130,6 @@ for (int i = 0; i < p.size(); i++) {
         quickHullFile << i.second.first << "," << i.second.second << endl;
     }
     quickHullFile.close();
-    
+    cout << "Time taken by QuickHull: " << duration.count() << " microSeconds" << endl;
     return 0;
 }
